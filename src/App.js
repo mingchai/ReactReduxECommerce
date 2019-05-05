@@ -10,7 +10,7 @@ class App extends React.Component {
 
   componentWillMount() {
     fetch("http://localhost:9000/products")
-      .then(res => res.json)
+      .then(res => res.json())
       .then(data =>
         this.setState({
           products: data,
