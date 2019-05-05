@@ -8,6 +8,7 @@ class App extends React.Component {
     super(props);
     this.state = { products: [], filteredProducts: [] };
     this.handleChangeSort = this.handleChangeSort.bind(this);
+    this.handleChangeSize = this.handleChangeSize.bind(this);
   }
 
   componentWillMount() {
@@ -21,6 +22,11 @@ class App extends React.Component {
       );
   }
 
+  handleChangeSize(e) {
+    this.setState({ size: e.target.value });
+    this.listProducts();
+  }
+
   handleChangeSort(e) {
     this.setState({ sort: e.target.value });
     this.listProducts();
@@ -29,22 +35,30 @@ class App extends React.Component {
   listProducts() {
     this.setState(state => {
       if (state.sort !== "") {
-        state.products.sort((a, b) => (
+        state.products.sort((productA, productB) => (
           // use a callback function to determine sorting criteria
           (state.sort === "lowest")
           // did the user select the option with value of 'lowest' (i.e. sort from lowest to highest)? If not, then they've decided to sort from highes to lowest
-            ? (a.price > b.price
-              // if element 'a' has a higher price, 'b' comes first, else 'a' comes first
+            ? (productA.price > productB.price
+              // if element 'productA' has a higher price, 'productB' comes first, else 'productA' comes first
               // if both have the same price, leave the order unchanged
               ? 1
               : -1)
-            : (a.price < b.price
-              // similar logic as above, if element 'b' has a higher price, it gets indexed to a higher position than element 'a'
+            : (productA.price < productB.price
+              // similar logic as above, if element 'productB' has a higher price, it gets indexed to a higher position than element 'productA'
             ? 1
             : -1)
         )
         )} else {
-        state.products.sort((a, b) => (a.id > b.id ? 1 : -1));
+        state.products.sort((productA, productB) => (productA.id > productB.id ? 1 : -1));
+      }
+
+      if (state.size !== "") {
+        return {
+          filteredProducts: state.products.filter(product =>
+            product.availableSizes.indexOf(state.size.toUpperCase()) >= 0
+          )
+        };
       }
       return { filteredProducts: state.products };
     });
