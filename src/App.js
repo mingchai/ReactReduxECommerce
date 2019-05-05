@@ -57,6 +57,7 @@ class App extends React.Component {
         return {
           filteredProducts: state.products.filter(product =>
             product.availableSizes.indexOf(state.size.toUpperCase()) >= 0
+            // show the products that are available in the size specified (from the dropdown menu) as chosen by the user
           )
         };
       }
