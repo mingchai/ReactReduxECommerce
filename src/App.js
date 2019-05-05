@@ -2,11 +2,12 @@ import React from "react";
 import "./App.css";
 import Products from "./components/Products";
 import Filter from "./components/Filter";
+import Cart from "./components/Cart";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { products: [], filteredProducts: [] };
+    this.state = { products: [], filteredProducts: [], cart: [] };
     this.handleChangeSort = this.handleChangeSort.bind(this);
     this.handleChangeSize = this.handleChangeSize.bind(this);
   }
@@ -85,7 +86,13 @@ class App extends React.Component {
               handleAddToCart={this.handleAddToCart}
             />
           </div>
-          <div className="col-md-4" />
+          <div className="col-md-4">
+            <Cart 
+              cartItems = {this.state.cart} 
+              handleRemoveFromCart = {this.handleRemoveFromCart}
+              handleAddToCart = {this.handleAddToCart}
+            />
+          </div>
         </div>
       </div>
     );
