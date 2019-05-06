@@ -7,9 +7,11 @@ import Cart from "./components/Cart";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { products: [], filteredProducts: [], cart: [] };
+    this.state = { products: [], filteredProducts: [], cart: [], cartItems:[] };
     this.handleChangeSort = this.handleChangeSort.bind(this);
     this.handleChangeSize = this.handleChangeSize.bind(this);
+    this.handleAddToCart = this.handleAddToCart.bind(this);
+
   }
 
   componentWillMount() {
@@ -66,6 +68,27 @@ class App extends React.Component {
     });
   }
 
+  handleAddToCart(e, product){
+    this.setState(state => {
+      const cartItems = state.cartItems;
+      let isProductInCart = false;
+
+      cartItems.forEach(item => {
+        if(item.id === product.id){
+          item.count += 1;
+          isProductInCart = true;
+        }
+      });
+
+      if(!isProductInCart){
+        cartItems.push({...product, count:1});
+        console.log(`${product.title} added to cart`);
+      }
+      localStorage.setItem('cartItems', JSON.stringify(cartItems));
+      return {cartItems : cartItems};
+    })
+  }
+
   render() {
     return (
       <div className="container">
@@ -88,9 +111,8 @@ class App extends React.Component {
           </div>
           <div className="col-md-4">
             <Cart 
-              cartItems = {this.state.cart} 
+              cartItems = {this.state.cartItems} 
               handleRemoveFromCart = {this.handleRemoveFromCart}
-              handleAddToCart = {this.handleAddToCart}
             />
           </div>
         </div>

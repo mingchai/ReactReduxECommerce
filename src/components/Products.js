@@ -6,7 +6,7 @@ export class Products extends Component {
     const productsItems = this.props.products.map(product => (
       <div className="col-md-4" key={product.id}>
         <div className="thumbnail text-center">
-          <a href={`#${product.id}`} onClick={this.props.handleAddToCart}>
+          <a href={`#${product.id}`} onClick={(e) => this.props.handleAddToCart(e,product)}>
             <img src={`/products/${product.sku}_2.jpg`} alt={product.title} />
             <p>{product.title}</p>
           </a>
