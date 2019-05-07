@@ -77,6 +77,7 @@ class App extends React.Component {
         if(item.id === product.id){
           item.count += 1;
           isProductInCart = true;
+          // If the same product is clicked, let's increment its quantity in the cart
         }
       });
 
