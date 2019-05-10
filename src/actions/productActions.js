@@ -1,4 +1,8 @@
-import { FETCH_PRODUCTS, FILTER_PRODUCTS_BY_SIZE } from "./types";
+import {
+  FETCH_PRODUCTS,
+  FILTER_PRODUCTS_BY_SIZE,
+  ORDER_PRODUCTS_BY_PRICE
+} from "./types";
 
 export const fetchProducts = () => dispatch => {
   fetch("http://localhost:9000/products")
@@ -18,7 +22,34 @@ export const filterProducts = (products, size) => dispatch => {
       items:
         size === ""
           ? products
-          : products.filter(a => a.availableSizes.indexOf(size.toUpperCase()) >= 0)
+          : products.filter(
+              a => a.availableSizes.indexOf(size.toUpperCase()) >= 0
+            )
+    }
+  });
+};
+
+export const sortProducts = (items, sort) => (dispatch) => {
+  const products = items.slice();
+  if (sort !== "") {
+    products.sort((productA, productB) =>
+      sort === "lowest"
+        ? productA.price > productB.price
+          ? 1
+          : -1
+        : productA.price < productB.price
+        ? 1
+        : -1
+    );
+  } else {
+    products.sort((productA, productB) => (productA.id > productB.id ? 1 : -1));
+  }
+
+  return dispatch({
+    type: ORDER_PRODUCTS_BY_PRICE,
+    payload: {
+      sort: sort,
+      items: products
     }
   });
 };
