@@ -17,7 +17,7 @@ export default class Cart extends React.Component {
           <div>
             <ul>
               {cartItems.map(item => (
-                <li>
+                <li key={item.id}>
                   <b>{item.title}</b> x {item.count}
                   <button
                     className="btn btn-danger"
