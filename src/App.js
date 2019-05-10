@@ -3,6 +3,8 @@ import "./App.css";
 import Products from "./components/Products";
 import Filter from "./components/Filter";
 import Cart from "./components/Cart";
+import {Provider} from "react-redux";
+import store from './store';
 
 class App extends React.Component {
   constructor(props) {
@@ -119,32 +121,34 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="container">
-        <h1>eCommerce Sample App</h1>
-        <hr />
-        <div className="row">
-          <div className="col-md-8">
-            <Filter
-              size={this.state.size}
-              sort={this.state.sort}
-              handleChangeSize={this.handleChangeSize}
-              handleChangeSort={this.handleChangeSort}
-              count={this.state.filteredProducts.length}
-            />
-            <hr />
-            <Products
-              products={this.state.filteredProducts}
-              handleAddToCart={this.handleAddToCart}
-            />
-          </div>
-          <div className="col-md-4">
-            <Cart
-              cartItems={this.state.cartItems}
-              handleRemoveFromCart={this.handleRemoveFromCart}
-            />
+      <Provider>
+        <div className="container">
+          <h1>eCommerce Sample App</h1>
+          <hr />
+          <div className="row">
+            <div className="col-md-8">
+              <Filter
+                size={this.state.size}
+                sort={this.state.sort}
+                handleChangeSize={this.handleChangeSize}
+                handleChangeSort={this.handleChangeSort}
+                count={this.state.filteredProducts.length}
+              />
+              <hr />
+              <Products
+                products={this.state.filteredProducts}
+                handleAddToCart={this.handleAddToCart}
+              />
+            </div>
+            <div className="col-md-4">
+              <Cart
+                cartItems={this.state.cartItems}
+                handleRemoveFromCart={this.handleRemoveFromCart}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </Provider>
     );
   }
 }
