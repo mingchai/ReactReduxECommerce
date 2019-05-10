@@ -121,7 +121,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <Provider>
+      <Provider store = {store}>
         <div className="container">
           <h1>eCommerce Sample App</h1>
           <hr />
