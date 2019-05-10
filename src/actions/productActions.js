@@ -1,4 +1,4 @@
-import { FETCH_PRODUCTS } from "./types";
+import { FETCH_PRODUCTS, FILTER_PRODUCTS_BY_SIZE } from "./types";
 
 export const fetchProducts = () => dispatch => {
   fetch("http://localhost:9000/products")
@@ -9,4 +9,16 @@ export const fetchProducts = () => dispatch => {
         payload: data
       });
     });
+};
+
+export const filterProducts = (products, size) => dispatch => {
+  return dispatch({
+    type: FILTER_PRODUCTS_BY_SIZE,
+    payload: {
+      items:
+        size === ""
+          ? products
+          : products.filter(a => a.availableSizes.indexOf(size.toUpperCase()))
+    }
+  });
 };
