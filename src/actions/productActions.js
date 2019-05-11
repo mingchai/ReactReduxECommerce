@@ -15,7 +15,7 @@ export const fetchProducts = () => dispatch => {
     });
 };
 
-export const filterProducts = (products, size) => dispatch => {
+export const filteredProducts = (products, size) => dispatch => {
   return dispatch({
     type: FILTER_PRODUCTS_BY_SIZE,
     payload: {

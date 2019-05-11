@@ -1,7 +1,10 @@
 import React from "react";
 import util from "../util";
+import {connect} from "react-redux";
+import {removeFromCart} from '../actions/cartActions';
 
-export default class Cart extends React.Component {
+
+class Cart extends React.Component {
   render() {
     const { cartItems } = this.props;
 
@@ -22,7 +25,7 @@ export default class Cart extends React.Component {
                   <button
                     className="btn btn-danger"
                     style={{ marginLeft: "5px", padding: "2px" }}
-                    onClick={e => this.props.handleRemoveFromCart(e, item)}
+                    onClick={() => {console.log("from cart",this.props.cartItems); this.props.removeFromCart(this.props.cartItems, item)}}
                   >
                     x
                   </button>
@@ -50,3 +53,6 @@ export default class Cart extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({ products: state.products.filteredItems, cartItems: state.cart.items})
+export default connect(mapStateToProps, removeFromCart)(Cart)
